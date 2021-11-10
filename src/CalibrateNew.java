@@ -51,9 +51,12 @@ public class CalibrateNew extends VBox
 	//private String csvFileAssoc = "C:\\OneFunInvManSys\\associatedTable.csv";
 	//private String csvFileAssocNum = "C:\\OneFunInvManSys\\associatedNumbers.csv";
 	private String csvFileBox = "C:\\OneFunInvManSys\\box.csv";
+	private String csvFileSKU = "C:\\OneFunInvManSys\\skuData.csv";
 	
 	private ArrayList<RawMaterial> rawMaterialList = new ArrayList<RawMaterial>();
 	private ArrayList<FinishedGood> finishedGoodList = new ArrayList<FinishedGood>();
+	private ArrayList<String> skuList = new ArrayList<String>();
+
 	private ArrayList<Box> boxList = new ArrayList<Box>();
 	
 	private ItemModel newItem = new ItemModel();
@@ -81,8 +84,17 @@ public class CalibrateNew extends VBox
 		ComboBox<String> comBoxRaw = new ComboBox<String>();
 		ComboBox<String> comBoxFin = new ComboBox<String>();
 		
+		//Updates ArrayLists defined in arguments
 		new UpdateInfo(rawMaterialList,finishedGoodList, boxList);
 		
+		//Updates skuList
+		BufferedReader br = new BufferedReader(new FileReader(csvFileSKU));
+		while ((line = br.readLine()) != null) {
+			String[] cols = line.split(",");
+			skuList.add(cols[0]);
+		}
+		br.close();
+
 		for(int i = 0; i < finishedGoodList.size(); i++)
 		{
 			comBox.getItems().add(finishedGoodList.get(i).getName());
@@ -372,6 +384,7 @@ public class CalibrateNew extends VBox
 	                browseString.setText("Chosen: " + fileAsString);
 	                
 	                int countBox = 0;
+					int countSKU = 0;
 	                boolean found = false;
 	                
 	                try {
@@ -395,6 +408,30 @@ public class CalibrateNew extends VBox
 	                	editBox(csvFileBox,boxList);
 	                }
 	                catch(IOException e3){
+	                	e3.printStackTrace();
+	                }
+
+					try{
+						BufferedReader br = new BufferedReader(new FileReader(fileAsString));
+	                	line = br.readLine();
+						while ((line = br.readLine()) != null) {
+							countSKU = 0;
+							found = false;
+
+							String[] cols = line.split(",");
+
+							while(line != null && found == false){
+								if(skuList.get(countSKU).compareTo(cols[0]) == 0){
+									//TODO: add changes to inventory
+								}
+							}
+
+						}
+
+
+						br.close();
+					}
+					catch(Exception e3){
 	                	e3.printStackTrace();
 	                }
 	                
