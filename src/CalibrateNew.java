@@ -88,12 +88,15 @@ public class CalibrateNew extends VBox
 		new UpdateInfo(rawMaterialList,finishedGoodList, boxList);
 		
 		//Updates skuList
-		BufferedReader br = new BufferedReader(new FileReader(csvFileSKU));
-		while ((line = br.readLine()) != null) {
-			String[] cols = line.split(",");
-			skuList.add(cols[0]);
+		try{
+			BufferedReader br = new BufferedReader(new FileReader(csvFileSKU));
+			while ((line = br.readLine()) != null) {
+				String[] cols = line.split(",");
+				skuList.add(cols[0]);
+			}
+			br.close();
 		}
-		br.close();
+		catch(Exception e){}
 
 		for(int i = 0; i < finishedGoodList.size(); i++)
 		{
