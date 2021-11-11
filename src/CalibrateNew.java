@@ -414,6 +414,12 @@ public class CalibrateNew extends VBox
 	                	e3.printStackTrace();
 	                }
 
+					int invCount = 0;
+					String invName = "";
+					int index = -1;
+					int newNum = 0;
+					String newNumStr = "";
+
 					try{
 						BufferedReader br = new BufferedReader(new FileReader(fileAsString));
 	                	line = br.readLine();
@@ -426,12 +432,28 @@ public class CalibrateNew extends VBox
 							while(line != null && found == false){
 								if(skuList.get(countSKU).compareTo(cols[0]) == 0){
 									//TODO: add changes to inventory
+									for(int i = 0; i < cols.length; i++){
+										invCount = Integer.parseInt(cols[i++]);
+										invName = cols[i++];
+
+										for(int j = 0; j < finishedGoodList.size(); j++){
+											if(finishedGoodList.get(j).getName().compareTo(invName) == 0){
+												index = j;
+												break;
+											}
+										}
+
+										newNum =  finishedGoodList.get(index).getStock() - invCount;
+										newNumStr = String.valueOf(newNum);
+										
+
+										//TODO: add edit inventory to subtract from inventory for each good
+										editInvintory(csvFinAddress, newNumStr, index, invName);
+									}
 								}
+								countSKU++;
 							}
-
 						}
-
-
 						br.close();
 					}
 					catch(Exception e3){
@@ -819,10 +841,8 @@ public class CalibrateNew extends VBox
 		}
 		catch(Exception e3)
 		{
-			
-			
+
 		}
-		
 		
 	}
 	
@@ -899,11 +919,6 @@ public class CalibrateNew extends VBox
 		
 	}
 	
-	
-	
-	
-	
-	
 	public void editBox(String filepath, ArrayList<Box> boxList)
 	{	
 		String tempFile = "temp.csv";
@@ -940,16 +955,9 @@ public class CalibrateNew extends VBox
 		}
 		catch(Exception e3)
 		{
-			
-			
 		}
-		
-		
 	}
-	
-	
-	
-	
+
 	//builds a chart to show finished good inventory
 	public static XYChart.Series<String,Number> buildFinishedChart(ArrayList<FinishedGood> finishedGoodList)
 	{
