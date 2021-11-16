@@ -8,7 +8,7 @@
             "type": "java",
             "name": "Launch Main",
             "request": "launch",
-            "vmArgs": " --module-path C:\\Users\\Ian\\Downloads\\javafx-sdk-16\\lib --add-modules javafx.controls,javafx.fxml",
+            "vmArgs": " --module-path C:\\java-sdk-16\\lib --add-modules javafx.controls,javafx.fxml",
             "mainClass": "Main",
             "projectName": "InventoryManagementVSCode_f37c7a4c"
         },
@@ -16,7 +16,7 @@
             "type": "java",
             "name": "Launch Main",
             "request": "launch",
-            "vmArgs": " --module-path C:\\Users\\Ian\\Downloads\\javafx-sdk-16\\lib --add-modules javafx.controls,javafx.fxml",
+            "vmArgs": " --module-path C:\\java-sdk-16\\lib --add-modules javafx.controls,javafx.fxml",
             "mainClass": "InventoryTracking/Main",
             "projectName": "InventoryManagement_e0141f3a"
         },
@@ -24,14 +24,14 @@
             "type": "java",
             "name": "Launch Current File",
             "request": "launch",
-            "vmArgs": " --module-path C:\\Users\\Ian\\Downloads\\javafx-sdk-16\\lib --add-modules javafx.controls,javafx.fxml",
+            "vmArgs": " --module-path C:\\java-sdk-16\\lib --add-modules javafx.controls,javafx.fxml",
             "mainClass": "${file}"
         },
         {
             "type": "java",
             "name": "Launch App",
             "request": "launch",
-            "vmArgs": " --module-path C:\\Users\\Ian\\Downloads\\javafx-sdk-16\\lib --add-modules javafx.controls,javafx.fxml",
+            "vmArgs": " --module-path C:\\java-sdk-16\\lib --add-modules javafx.controls,javafx.fxml",
             "mainClass": "Main",
             "projectName": "InventoryManagement_e0141f3a"
         }

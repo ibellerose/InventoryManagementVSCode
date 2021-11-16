@@ -55,7 +55,7 @@ public class CalibrateNew extends VBox
 	
 	private ArrayList<RawMaterial> rawMaterialList = new ArrayList<RawMaterial>();
 	private ArrayList<FinishedGood> finishedGoodList = new ArrayList<FinishedGood>();
-	private ArrayList<String> skuList = new ArrayList<String>();
+	private ArrayList<Sku> skuList = new ArrayList<Sku>();
 
 	private ArrayList<Box> boxList = new ArrayList<Box>();
 	
@@ -92,11 +92,16 @@ public class CalibrateNew extends VBox
 			BufferedReader br = new BufferedReader(new FileReader(csvFileSKU));
 			while ((line = br.readLine()) != null) {
 				String[] cols = line.split(",");
-				skuList.add(cols[0]);
+				skuList.add(new Sku(cols[0]));
+				for(int i = 0; i < cols.length-2; i++){
+					skuList.get(skuList.size()-1).addFinishedGoodCount(Integer.parseInt(cols[i+1]));
+					skuList.get(skuList.size()-1).addFinishedGoodName(cols[i+2]);
+				}
 			}
 			br.close();
 		}
 		catch(Exception e){}
+		//end of update skuList
 
 		for(int i = 0; i < finishedGoodList.size(); i++)
 		{
@@ -430,24 +435,19 @@ public class CalibrateNew extends VBox
 							String[] cols = line.split(",");
 
 							while(line != null && found == false){
-								if(skuList.get(countSKU).compareTo(cols[2]) == 0){
+								if(skuList.get(countSKU).getName().compareTo(cols[2]) == 0){
 									//TODO: add changes to inventory
-									for(int i = 0; i < cols.length; i++){
-										invCount = Integer.parseInt(cols[i++]);
-										invName = cols[i++];
-
-										for(int j = 0; j < finishedGoodList.size(); j++){
-											if(finishedGoodList.get(j).getName().compareTo(invName) == 0){
-												index = j;
+									//correct way
+									for(int k = 0; k < skuList.get(countSKU).getTotal(); k++){
+										for(int i = 0; i < finishedGoodList.size();i++){
+											if(skuList.get(countSKU).getFinishedGoodName(k).compareTo(finishedGoodList.get(i).getName()) == 0){
+												index = i;
+												newNum = finishedGoodList.get(i).getStock() - skuList.get(countSKU).getFinishedGoodCount(k);
+												invName = finishedGoodList.get(i).getName();
+												newNumStr = String.valueOf(newNum);
 												break;
 											}
 										}
-
-										newNum =  finishedGoodList.get(index).getStock() - invCount;
-										newNumStr = String.valueOf(newNum);
-										
-
-										//TODO: add edit inventory to subtract from inventory for each good
 										editInvintory(csvFinAddress, newNumStr, index, invName);
 									}
 								}
