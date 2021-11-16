@@ -430,7 +430,7 @@ public class CalibrateNew extends VBox
 							String[] cols = line.split(",");
 
 							while(line != null && found == false){
-								if(skuList.get(countSKU).compareTo(cols[0]) == 0){
+								if(skuList.get(countSKU).compareTo(cols[2]) == 0){
 									//TODO: add changes to inventory
 									for(int i = 0; i < cols.length; i++){
 										invCount = Integer.parseInt(cols[i++]);
