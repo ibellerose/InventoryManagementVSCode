@@ -436,8 +436,6 @@ public class CalibrateNew extends VBox
 
 							while(line != null && found == false){
 								if(skuList.get(countSKU).getName().compareTo(cols[2]) == 0){
-									//TODO: add changes to inventory
-									//correct way
 									for(int k = 0; k < skuList.get(countSKU).getTotal(); k++){
 										for(int i = 0; i < finishedGoodList.size();i++){
 											if(skuList.get(countSKU).getFinishedGoodName(k).compareTo(finishedGoodList.get(i).getName()) == 0){

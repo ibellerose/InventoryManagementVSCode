@@ -12,7 +12,9 @@ public class Sku {
     }
 
     Sku(String newName){
-
+        skuName = newName;
+        finishedGoodName = new ArrayList<String>();
+        finishedGoodCount = new ArrayList<Integer>();
     }
 
     void setName(String initName){
