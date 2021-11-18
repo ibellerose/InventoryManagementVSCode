@@ -93,10 +93,11 @@ public class CalibrateNew extends VBox
 			while ((line = br.readLine()) != null) {
 				String[] cols = line.split(",");
 				skuList.add(new Sku(cols[0]));
-				for(int i = 0; i < cols.length-2; i++){
+				for(int i = 0; i < (cols.length-1)/2; i += 2){
 					skuList.get(skuList.size()-1).addFinishedGoodCount(Integer.parseInt(cols[i+1]));
 					skuList.get(skuList.size()-1).addFinishedGoodName(cols[i+2]);
 				}
+				
 			}
 			br.close();
 		}
@@ -288,7 +289,7 @@ public class CalibrateNew extends VBox
 		for (XYChart.Series<String, Number> series1 : bar.getData()) {
 		    for (XYChart.Data<String, Number> data : series1.getData()) {
 		    	data.getNode().setOnMousePressed((MouseEvent event) -> {
-		            System.out.println("you clicked " + data.toString() + series1.toString());
+		            //System.out.println("you clicked " + data.toString() + series1.toString());
 		        });
 		        Tooltip.install(data.getNode(), new Tooltip(data.getXValue() + ":\n" + data.getYValue()));
 		    }
@@ -436,17 +437,20 @@ public class CalibrateNew extends VBox
 
 							while(line != null && found == false && countSKU < skuList.size()){
 								if(skuList.get(countSKU).getName().compareTo(cols[2]) == 0){
+									found = true;
+
 									for(int k = 0; k < skuList.get(countSKU).getTotal(); k++){
 										for(int i = 0; i < finishedGoodList.size();i++){
 											if(skuList.get(countSKU).getFinishedGoodName(k).compareTo(finishedGoodList.get(i).getName()) == 0){
 												index = i;
-												newNum = finishedGoodList.get(i).getStock() - skuList.get(countSKU).getFinishedGoodCount(k);
+												newNum = finishedGoodList.get(i).getStock() - (Integer.parseInt(cols[1]) * skuList.get(countSKU).getFinishedGoodCount(k));
 												invName = finishedGoodList.get(i).getName();
 												newNumStr = String.valueOf(newNum);
 												break;
 											}
 										}
 										editInvintory(csvFinAddress, newNumStr, index, invName);
+										new UpdateInfo(rawMaterialList,finishedGoodList, boxList);
 									}
 								}
 								countSKU++;
