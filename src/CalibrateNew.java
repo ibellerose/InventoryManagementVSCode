@@ -434,7 +434,7 @@ public class CalibrateNew extends VBox
 
 							String[] cols = line.split(",");
 
-							while(line != null && found == false){
+							while(line != null && found == false && countSKU < skuList.size()){
 								if(skuList.get(countSKU).getName().compareTo(cols[2]) == 0){
 									for(int k = 0; k < skuList.get(countSKU).getTotal(); k++){
 										for(int i = 0; i < finishedGoodList.size();i++){

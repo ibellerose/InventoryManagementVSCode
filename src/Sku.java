@@ -19,8 +19,6 @@ public class Sku {
 
     void setName(String initName){
         skuName = initName;
-        finishedGoodName = new ArrayList<String>();
-        finishedGoodCount = new ArrayList<Integer>();
     }
 
     void addFinishedGoodName(String newName){
